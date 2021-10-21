@@ -1,10 +1,8 @@
 import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Button, IconButton, Typography, Menu, MenuItem } from '@material-ui/core';
-import logo from "../assets/images/logo.svg";
+import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { useChangeTheme } from '../theme';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
-import { AccountCircle } from '@material-ui/icons';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -25,9 +23,9 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-const goHome = () => {
+// const goHome = () => {
 
-}
+// }
 
 export default function ToolBar() {
     const classes = useStyles();

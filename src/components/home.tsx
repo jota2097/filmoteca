@@ -1,4 +1,4 @@
-import { Grid, ButtonGroup, Button, makeStyles, createStyles, CircularProgress, useTheme, IconButton } from '@material-ui/core';
+import { Grid, ButtonGroup, Button, makeStyles, createStyles, CircularProgress } from '@material-ui/core';
 import { Pagination } from '../models/paginationPokemon';
 import { useEffect, useState } from 'react';
 import { getPokemonsPagination } from '../services/axios';
