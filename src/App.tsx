@@ -1,9 +1,11 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
 import './App.css';
-import Home from './components/home';
+import UpcomingMovies from './components/upcomingMovies/upconmigMovies';
 import Detail from './components/detail';
-import Toolbar from './components/toolbar';
+import Toolbar from './components/toolbar/toolbar';
+import PopularMovies from './components/popularMovies/popularMovies';
+import TvShows from './components/tvShows/tvShows';
 
 
 function App() {
@@ -19,12 +21,12 @@ function App() {
           direction="row"
           justify="center">
           <Grid item style={{ marginTop: "5%" }}>
-            <Router>
-              <Switch>
-                <Route exact path="/" component={Home} />
-                <Route path="/detail" component={Detail} />
-              </Switch>
-            </Router>
+            <Switch>
+              <Route exact path="/" component={PopularMovies} />
+              <Route path="/upcoming" component={UpcomingMovies} />
+              <Route path="/tvShow" component={TvShows} />
+              <Route path="/detail" component={Detail} />
+            </Switch>
           </Grid>
         </Grid>
       </Container>

@@ -1,8 +1,9 @@
 import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
-import { useChangeTheme } from '../theme';
+import { useChangeTheme } from '../../theme';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -19,6 +20,15 @@ const useStyles = makeStyles(() =>
         btn: {
             backgroundColor: "transparent",
             border: "none"
+        },
+        menuOpt: {
+            fontWeight: 'bold',
+            paddingRight: "20px"
+
+        },
+        textLink: {
+            color: "white",
+            textDecorationLine: "inherit"
         }
     }),
 );
@@ -34,12 +44,22 @@ export default function ToolBar() {
 
     return (
         <div className={classes.root}>
-            <AppBar className={classes.toolbar} position="static" >
+            <AppBar className={classes.toolbar} position="static" elevation={0}  >
                 <Toolbar variant="dense">
                     <Typography variant="h5" color="inherit" className={classes.flex}>
                         Filmoteca
                     </Typography>
                     <div>
+
+                        <Link to="/" color="white" className={`${classes.flex} ${classes.menuOpt} ${classes.textLink}`}>
+                            Películas populares
+                        </Link>
+                        <Link to="/upcoming" color="white" className={`${classes.flex} ${classes.menuOpt} ${classes.textLink}`}>
+                            Próximas películas
+                        </Link>
+                        <Link to="/tvShow" color="white" className={`${classes.flex} ${classes.menuOpt} ${classes.textLink}`}>
+                            Tv shows
+                        </Link>
                         <IconButton
                             title="Toggle light/dark mode"
                             onClick={() => changeTheme()}
@@ -50,6 +70,6 @@ export default function ToolBar() {
                 </Toolbar>
 
             </AppBar>
-        </div>
+        </div >
     );
 }
