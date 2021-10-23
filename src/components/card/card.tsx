@@ -12,8 +12,8 @@ import { IUserMovies } from '../../interfaces/IUserMoviesModel';
 // import { AppContext } from '../theme';
 import { useState } from 'react';
 import { useContext } from 'react';
-import { ProviderContext } from '../../provider/provider';
 import { IProviderModel } from '../../interfaces/IProviderModel';
+import { ProviderContext } from '../../provider/provider';
 
 export interface State extends SnackbarOrigin {
     open: boolean;
@@ -35,6 +35,7 @@ const useStyles = makeStyles(() =>
 export default function CardItem({ item, allowViewMore, isCallFromDetail = false }: { item: ICardModel, allowViewMore: boolean, isCallFromDetail: boolean }) {
     const classes = useStyles();
     const [rating, setRating] = useState<number | null>(0);
+    const { state, dispatch } = useContext(ProviderContext);
     const [snackBar, setSnackbar] = useState<State>({
         open: false,
         vertical: 'top',
@@ -69,7 +70,7 @@ export default function CardItem({ item, allowViewMore, isCallFromDetail = false
     };
 
     const addToWishList = () => {
-        // dispatch({ type: "SET_WISHLIST", payload: item });
+        dispatch({ type: "SET_WISHLIST", payload: item });
         // console.log(state.wishlist.length);
         snackBarMessage = 'Se ha agregado el item a la categoría de whishlist';
         handleClick();

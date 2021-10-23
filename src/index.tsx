@@ -9,6 +9,7 @@ import blue from '@material-ui/core/colors/blue';
 import { BrowserRouter } from 'react-router-dom';
 import ThemeProvider from './provider/themeProvider';
 import { Provider } from './provider/provider';
+import { TodoProvider } from './provider/todoProvider';
 
 const theme = createMuiTheme({
   palette: {
@@ -21,12 +22,10 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider>
       <ThemeProvider theme={theme}>
-
         <BrowserRouter>
           <CssBaseline />
           <App />
         </BrowserRouter>
-
       </ThemeProvider>
     </Provider>
   </React.StrictMode >,

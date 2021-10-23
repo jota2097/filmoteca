@@ -9,8 +9,8 @@ export type Action =
   { type: "SET_WISHLIST"; payload: ICardModel }
   | { type: "SET_ALREADYSEEN"; payload: ICardModel };
 
-interface ProviderProps {
-  children: React.ReactNode;
+interface Props {
+  children: JSX.Element | JSX.Element[]
 }
 
 const initialState: IUserMovies = {
@@ -44,12 +44,16 @@ const reducer = (state: AppState, action: Action) => {
   return tempState;
 };
 
-const ProviderContext = createContext<IProviderModel>({ state: initialState, dispatch: () => { } });
 
 
+
+
+export const ProviderContext = createContext<IProviderModel>({} as IProviderModel);
 // const InputValueContext = React.createContext<any>(null);
-function Provider({ children }: ProviderProps) {
+
+export const Provider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
 
   return (
     <ProviderContext.Provider value={{ state, dispatch }}>
@@ -58,4 +62,3 @@ function Provider({ children }: ProviderProps) {
   );
 }
 
-export { ProviderContext, Provider };

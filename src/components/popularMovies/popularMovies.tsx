@@ -8,11 +8,20 @@ import CardItem from '../card/card';
 import { ICardModel } from '../../interfaces/ICardModel';
 import CustomGrid from '../grid/grid';
 import { ProviderContext } from '../../provider/provider';
+import { TodoContext } from '../../provider/todoContext';
 
 export default function PopularMovies() {
     let title = "Peliculas populares";
     const [data, setData] = useState<IMovies[]>();
-    const [state, dispatch] = useContext<any>(ProviderContext);
+    // const { todoState, toggleTodo } = useContext(TodoContext);
+   
+    //const { todos } = todoState;
+
+    // return {
+    //     todos: todos,
+    //     pendingTodos: todos.filter(todo => !todo.completed).length,
+    //     toggleTodo
+    // }
     useEffect(() => {
         const fetchData = async () => {
             setData(await getPopularMovies());
@@ -30,7 +39,7 @@ export default function PopularMovies() {
     const sortByVotes = (): void => {
         data.sort((a, b) => b.vote_average - a.vote_average);
         setData([...data]);
-        console.log(state.Provider);
+        //   console.log(state.Provider);
     }
 
 
