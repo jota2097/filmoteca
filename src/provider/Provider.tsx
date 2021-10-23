@@ -5,19 +5,25 @@ import { IProviderModel } from "../interfaces/IProviderModel";
 
 type AppState = typeof initialState;
 export type Action =
-  |
-  { type: "SET_WISHLIST"; payload: ICardModel }
-  | { type: "SET_ALREADYSEEN"; payload: ICardModel };
+  | { type: "SET_WISHLIST"; payload: ICardModel }
+  | { type: "SET_ALREADYSEEN"; payload: ICardModel }
+  | { type: "ORDER_BY_NAME_ALREADYSEEN"; }
+  | { type: "ORDER_BY_NAME_WISHLIST"; }
+  | { type: "ORDER_BY_VOTE_ALREADYSEEN"; }
+  | { type: "ORDER_BY_VOTE_WISHLIST"; };
 
 interface Props {
   children: JSX.Element | JSX.Element[]
 }
 
-const initialState: IUserMovies = {
+let storage = localStorage.getItem("userMovies");
+const defaultState: IUserMovies = {
   wishlist: [],
   alreadySeen: []
 
 };
+
+const initialState: IUserMovies = storage != null ? JSON.parse(storage) : defaultState;
 
 const reducer = (state: AppState, action: Action) => {
   let tempState;
@@ -36,6 +42,38 @@ const reducer = (state: AppState, action: Action) => {
         alreadySeen: [action.payload, ...state.alreadySeen],
       };
       break;
+    case "ORDER_BY_NAME_ALREADYSEEN":
+      state.alreadySeen.sort((a, b) => a.title.localeCompare(b.title));
+      tempState =
+      {
+        ...state,
+        alreadySeen: [...state.alreadySeen],
+      };
+      break;
+    case "ORDER_BY_NAME_WISHLIST":
+      state.wishlist.sort((a, b) => a.title.localeCompare(b.title));
+      tempState =
+      {
+        ...state,
+        alreadySeen: [...state.alreadySeen],
+      };
+      break;
+    case "ORDER_BY_VOTE_ALREADYSEEN":
+      state.alreadySeen.sort((a, b) => b.voteAverage - a.voteAverage)
+      tempState =
+      {
+        ...state,
+        alreadySeen: [...state.alreadySeen],
+      };
+      break;
+    case "ORDER_BY_VOTE_WISHLIST":
+      state.wishlist.sort((a, b) => b.voteAverage - a.voteAverage)
+      tempState =
+      {
+        ...state,
+        alreadySeen: [...state.alreadySeen],
+      };
+      break;
     default:
       tempState = state;
       break;
@@ -44,12 +82,7 @@ const reducer = (state: AppState, action: Action) => {
   return tempState;
 };
 
-
-
-
-
 export const ProviderContext = createContext<IProviderModel>({} as IProviderModel);
-// const InputValueContext = React.createContext<any>(null);
 
 export const Provider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(reducer, initialState);

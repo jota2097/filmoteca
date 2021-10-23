@@ -37,6 +37,7 @@ export default function TvShows() {
                 title={title}
                 sortByName={sortByName}
                 sortByVotes={sortByVotes}
+                showSorts={data.length > 0}
                 child={<GenericList
                     keyExtractor={({ id }) => id.toString()}
                     data={data}
@@ -44,6 +45,7 @@ export default function TvShows() {
                         <CardItem
                             isCallFromDetail={false}
                             allowViewMore={false}
+                            showCardActions={true}
                             item={{
                                 id: item.id,
                                 title: item.name,

@@ -42,6 +42,7 @@ export default function Detail() {
             <CardItem
                 isCallFromDetail={true}
                 allowViewMore={false}
+                showCardActions={false}
                 item={{
                     id: movie.id,
                     title: movie.title,

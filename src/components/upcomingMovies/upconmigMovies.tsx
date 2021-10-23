@@ -37,6 +37,7 @@ export default function UpcomingMovies() {
             title={title}
             sortByName={sortByName}
             sortByVotes={sortByVotes}
+            showSorts={data.length > 0}
             child={<GenericList
                 keyExtractor={({ id }) => id.toString()}
                 data={data}
@@ -44,6 +45,7 @@ export default function UpcomingMovies() {
                     <CardItem
                         isCallFromDetail={false}
                         allowViewMore={true}
+                        showCardActions={true}
                         item={{
                             id: item.id,
                             title: item.title,

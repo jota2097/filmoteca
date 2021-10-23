@@ -5,27 +5,29 @@ import { SortByAlpha, StarBorder } from '@material-ui/icons';
 
 
 
-export default function CustomGrid({ title, child, sortByName, sortByVotes }: { title: string, child: React.ReactNode, sortByName: () => void, sortByVotes: () => void }) {
+export default function CustomGrid({ title, child, sortByName, sortByVotes, showSorts }: { title: string, child: React.ReactNode, sortByName: () => void, sortByVotes: () => void, showSorts: boolean }) {
     return (
         <>
-            <Grid container
-                direction="row"
-                justify="flex-end" spacing={1}>
-                <Grid item>
+            {showSorts &&
+                <Grid container
+                    direction="row"
+                    justify="flex-end" spacing={1}>
+                    <Grid item>
+                        <Tooltip title="Ordenar por nombre">
+                            <IconButton onClick={() => sortByName()}>
+                                <SortByAlpha />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Ordenar por calificación">
+                            <IconButton onClick={() => sortByVotes()}>
+                                <StarBorder />
+                            </IconButton>
+                        </Tooltip>
 
-                    <Tooltip title="Ordenar por nombre">
-                        <IconButton onClick={() => sortByName()}>
-                            <SortByAlpha />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Ordenar por calificación">
-                        <IconButton onClick={() => sortByVotes()}>
-                            <StarBorder />
-                        </IconButton>
-                    </Tooltip>
-
+                    </Grid>
                 </Grid>
-            </Grid>
+            }
+
             <Grid container
                 spacing={3}
                 direction="column"

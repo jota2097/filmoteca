@@ -1,27 +1,18 @@
 import { CircularProgress } from '@material-ui/core';
 
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { getPopularMovies } from '../../services/axios';
 import { IMovies } from '../../interfaces/IMoviesModel';
 import GenericList from '../genericList/genericList';
 import CardItem from '../card/card';
 import { ICardModel } from '../../interfaces/ICardModel';
 import CustomGrid from '../grid/grid';
-import { ProviderContext } from '../../provider/provider';
-import { TodoContext } from '../../provider/todoContext';
+
 
 export default function PopularMovies() {
     let title = "Peliculas populares";
     const [data, setData] = useState<IMovies[]>();
-    // const { todoState, toggleTodo } = useContext(TodoContext);
-   
-    //const { todos } = todoState;
 
-    // return {
-    //     todos: todos,
-    //     pendingTodos: todos.filter(todo => !todo.completed).length,
-    //     toggleTodo
-    // }
     useEffect(() => {
         const fetchData = async () => {
             setData(await getPopularMovies());
@@ -39,7 +30,6 @@ export default function PopularMovies() {
     const sortByVotes = (): void => {
         data.sort((a, b) => b.vote_average - a.vote_average);
         setData([...data]);
-        //   console.log(state.Provider);
     }
 
 
@@ -49,6 +39,7 @@ export default function PopularMovies() {
                 title={title}
                 sortByName={sortByName}
                 sortByVotes={sortByVotes}
+                showSorts={data.length > 0}
                 child={<GenericList
                     keyExtractor={({ id }) => id.toString()}
                     data={data}
@@ -56,6 +47,7 @@ export default function PopularMovies() {
                         <CardItem
                             isCallFromDetail={false}
                             allowViewMore={true}
+                            showCardActions={true}
                             item={{
                                 id: item.id,
                                 title: item.title,

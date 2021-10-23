@@ -8,11 +8,8 @@ import { Favorite } from '@material-ui/icons';
 import { URL_IMAGES } from '../../config';
 import { ratingMovie } from '../../services/axios';
 import { Alert, Snackbar, SnackbarOrigin } from '@mui/material';
-import { IUserMovies } from '../../interfaces/IUserMoviesModel';
-// import { AppContext } from '../theme';
 import { useState } from 'react';
 import { useContext } from 'react';
-import { IProviderModel } from '../../interfaces/IProviderModel';
 import { ProviderContext } from '../../provider/provider';
 
 export interface State extends SnackbarOrigin {
@@ -32,7 +29,8 @@ const useStyles = makeStyles(() =>
         }
     }));
 
-export default function CardItem({ item, allowViewMore, isCallFromDetail = false }: { item: ICardModel, allowViewMore: boolean, isCallFromDetail: boolean }) {
+export default function CardItem({ item, allowViewMore, isCallFromDetail = false, showCardActions }:
+    { item: ICardModel, allowViewMore: boolean, isCallFromDetail: boolean, showCardActions: boolean }) {
     const classes = useStyles();
     const [rating, setRating] = useState<number | null>(0);
     const { state, dispatch } = useContext(ProviderContext);
@@ -71,12 +69,12 @@ export default function CardItem({ item, allowViewMore, isCallFromDetail = false
 
     const addToWishList = () => {
         dispatch({ type: "SET_WISHLIST", payload: item });
-        // console.log(state.wishlist.length);
         snackBarMessage = 'Se ha agregado el item a la categoría de whishlist';
         handleClick();
     }
 
     const addToAlreadySeen = () => {
+        dispatch({ type: "SET_ALREADYSEEN", payload: item });
         snackBarMessage = 'Se ha agregado el item a la categoría de vistos';
         handleClick();
     }
@@ -126,14 +124,16 @@ export default function CardItem({ item, allowViewMore, isCallFromDetail = false
                         {item.overview}
                     </Typography>
                 </CardContent>
-                <CardActions disableSpacing>
-                    {getButtonActions()}
-                    {allowViewMore &&
-                        <Link to={`/movie?id=${item.id}`} className={classes.button}>
-                            <Button size="small">Ver más</Button>
-                        </Link>
-                    }
-                </CardActions>
+                {showCardActions &&
+                    <CardActions disableSpacing>
+                        {getButtonActions()}
+                        {allowViewMore &&
+                            <Link to={`/movie?id=${item.id}`} className={classes.button}>
+                                <Button size="small">Ver más</Button>
+                            </Link>
+                        }
+                    </CardActions>}
+
             </Card >
         </>
 
