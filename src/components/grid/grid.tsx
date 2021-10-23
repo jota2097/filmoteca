@@ -1,4 +1,4 @@
-import { Grid, Typography, ButtonGroup, IconButton, Tooltip } from '@material-ui/core';
+import { Grid, Typography, IconButton, Tooltip } from '@material-ui/core';
 import { SortByAlpha, StarBorder } from '@material-ui/icons';
 
 

@@ -4,4 +4,5 @@ export interface ICardModel {
     imageUrl: string;
     year: Date;
     voteAverage: number;
+    overview: string;
 }

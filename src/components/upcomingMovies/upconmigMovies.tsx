@@ -2,15 +2,15 @@ import { CircularProgress } from '@material-ui/core';
 
 import { useEffect, useState } from 'react';
 import { getUpcomingMovies } from '../../services/axios';
-import { IMovies } from '../../models/upconmigModel';
+import { IMovies } from '../../interfaces/IUpconmigModel';
 import CardItem from '../card/card';
-import { ICardModel } from '../../models/cardModel';
+import { ICardModel } from '../../interfaces/ICardModel';
 import GenericList from '../genericList/genericList';
 import CustomGrid from '../grid/grid';
 
 export default function UpcomingMovies() {
     let title = "Próximas peliculas";
-    const [data, setData] = useState<IMovies[]>([]);
+    const [data, setData] = useState<IMovies[]>();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,14 +41,17 @@ export default function UpcomingMovies() {
                 child={<GenericList
                     keyExtractor={({ id }) => id.toString()}
                     data={data}
-                    renderItem={(item) => <CardItem
-                        item={{
-                            id: item.id,
-                            title: item.title,
-                            imageUrl: item.poster_path,
-                            year: item.release_date,
-                            voteAverage: item.vote_average
-                        } as ICardModel} />}
+                    renderItem={(item) =>
+                        <CardItem
+                            isCallFromDetail={false}
+                            allowViewMore={true}
+                            item={{
+                                id: item.id,
+                                title: item.title,
+                                imageUrl: item.poster_path,
+                                year: item.release_date,
+                                voteAverage: item.vote_average
+                            } as ICardModel} />}
                 />} />
         </>
     );
