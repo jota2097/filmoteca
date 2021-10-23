@@ -1,78 +1,61 @@
-import React, { createContext, useState } from 'react';
-import {
-    createMuiTheme,
-    ThemeProvider as MuiThemeProvider,
-    Theme
-} from '@material-ui/core/styles';
-
-import { useTheme } from '@material-ui/core/styles';
+import React, { createContext, useReducer } from "react";
 import { IUserMovies } from '../interfaces/IUserMoviesModel';
+import { ICardModel } from '../interfaces/ICardModel';
+import { IProviderModel } from "../interfaces/IProviderModel";
 
-interface ThemeProviderProps {
-    children: React.ReactNode
-    theme: Theme,
+type AppState = typeof initialState;
+export type Action =
+  |
+  { type: "SET_WISHLIST"; payload: ICardModel }
+  | { type: "SET_ALREADYSEEN"; payload: ICardModel };
+
+interface ProviderProps {
+  children: React.ReactNode;
 }
 
-const ThemeDispatchContext = React.createContext<any>(null);
-const defaultValueAppContext: IUserMovies = { wishlist: [], alreadySeen: [] };
+const initialState: IUserMovies = {
+  wishlist: [],
+  alreadySeen: []
 
-const Provider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
-    const [state, setState] = useState(defaultValueAppContext);
-    const themeInitialOptions = {
-        paletteType: 'light'
-    }
+};
 
-    const [themeOptions, dispatch] = React.useReducer((state: any, action: any) => {
-        switch (action.type) {
-            case 'changeTheme':
-                return {
-                    ...state,
-                    paletteType: action.payload
-                }
-            default:
-                throw new Error();
-        }
-    }, themeInitialOptions);
+const reducer = (state: AppState, action: Action) => {
+  let tempState;
+  switch (action.type) {
+    case "SET_WISHLIST":
+      tempState =
+      {
+        ...state,
+        wishlist: [action.payload, ...state.wishlist],
+      };
+      break;
+    case "SET_ALREADYSEEN":
+      tempState =
+      {
+        ...state,
+        alreadySeen: [action.payload, ...state.alreadySeen],
+      };
+      break;
+    default:
+      tempState = state;
+      break;
+  }
+  localStorage.setItem('userMovies', JSON.stringify(tempState));
+  return tempState;
+};
 
-    const memoizedTheme = React.useMemo(() => {
-        return createMuiTheme({
-            ...theme,
-            palette: {
-                type: themeOptions.paletteType
-            }
-        })
-    }, [theme, themeOptions.paletteType]);
+const ProviderContext = createContext<IProviderModel>({ state: initialState, dispatch: () => { } });
 
-    const [themeOptions2, dispatch2] = React.useReducer((state: any, action: any) => {
 
-        return {
-            ...state
-        }
+// const InputValueContext = React.createContext<any>(null);
+function Provider({ children }: ProviderProps) {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-    }, defaultValueAppContext);
-    return (
-        <MuiThemeProvider theme={memoizedTheme}>
-            <ThemeDispatchContext.Provider value={dispatch}>
-                <AppContext.Provider value={{ state, setState }}>
-                    {children}
-                </AppContext.Provider>
-            </ThemeDispatchContext.Provider>
-        </MuiThemeProvider>
-    )
+  return (
+    <ProviderContext.Provider value={{ state, dispatch }}>
+      {children}
+    </ProviderContext.Provider>
+  );
 }
 
-export default Provider
-export const AppContext = createContext(defaultValueAppContext);
-
-export const useChangeTheme = () => {
-    const dispatch = React.useContext(ThemeDispatchContext);
-    const theme = useTheme();
-    const changeTheme = React.useCallback(() =>
-        dispatch({
-            type: 'changeTheme',
-            payload: theme.palette.type === 'light' ? 'dark' : 'light'
-        }),
-        [theme.palette.type, dispatch]);
-
-    return changeTheme;
-}
+export { ProviderContext, Provider };

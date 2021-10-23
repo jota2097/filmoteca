@@ -7,7 +7,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import blue from '@material-ui/core/colors/blue';
 import { BrowserRouter } from 'react-router-dom';
-import Provider from './provider/Provider';
+import ThemeProvider from './provider/themeProvider';
+import { Provider } from './provider/provider';
 
 const theme = createMuiTheme({
   palette: {
@@ -18,13 +19,17 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider theme={theme}>
-      <BrowserRouter>
-        <CssBaseline />
-        <App />
-      </BrowserRouter>
+    <Provider>
+      <ThemeProvider theme={theme}>
+
+        <BrowserRouter>
+          <CssBaseline />
+          <App />
+        </BrowserRouter>
+
+      </ThemeProvider>
     </Provider>
-  </React.StrictMode>,
+  </React.StrictMode >,
 
   document.getElementById('root')
 );

@@ -1,17 +1,18 @@
 import { CircularProgress } from '@material-ui/core';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { getPopularMovies } from '../../services/axios';
 import { IMovies } from '../../interfaces/IMoviesModel';
 import GenericList from '../genericList/genericList';
 import CardItem from '../card/card';
 import { ICardModel } from '../../interfaces/ICardModel';
 import CustomGrid from '../grid/grid';
+import { ProviderContext } from '../../provider/provider';
 
 export default function PopularMovies() {
     let title = "Peliculas populares";
     const [data, setData] = useState<IMovies[]>();
-
+    const [state, dispatch] = useContext<any>(ProviderContext);
     useEffect(() => {
         const fetchData = async () => {
             setData(await getPopularMovies());
@@ -29,7 +30,9 @@ export default function PopularMovies() {
     const sortByVotes = (): void => {
         data.sort((a, b) => b.vote_average - a.vote_average);
         setData([...data]);
+        console.log(state.Provider);
     }
+
 
     return (
         <>

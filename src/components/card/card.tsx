@@ -9,9 +9,11 @@ import { URL_IMAGES } from '../../config';
 import { ratingMovie } from '../../services/axios';
 import { Alert, Snackbar, SnackbarOrigin } from '@mui/material';
 import { IUserMovies } from '../../interfaces/IUserMoviesModel';
-import { AppContext } from '../../provider/Provider';
+// import { AppContext } from '../theme';
 import { useState } from 'react';
-import {useContext} from 'react';
+import { useContext } from 'react';
+import { ProviderContext } from '../../provider/provider';
+import { IProviderModel } from '../../interfaces/IProviderModel';
 
 export interface State extends SnackbarOrigin {
     open: boolean;
@@ -40,11 +42,7 @@ export default function CardItem({ item, allowViewMore, isCallFromDetail = false
 
     });
     const { vertical, horizontal, open } = snackBar;
- //   const [foo, setState] = useContext(AppContext);
-
-  
     let snackBarMessage = 'Se ha enviado tu rating satisfactoriamente';
-    let data: IUserMovies = { wishlist: [], alreadySeen: [] };
 
     const getRating = () => {
         return !isCallFromDetail ?
@@ -71,29 +69,14 @@ export default function CardItem({ item, allowViewMore, isCallFromDetail = false
     };
 
     const addToWishList = () => {
-
-        var d = localStorage.getItem('userMovies');
-        if (d == null) {
-            data.wishlist = [item];
-        } else {
-            data = JSON.parse(d);
-            data.wishlist.push(item);
-        }
+        // dispatch({ type: "SET_WISHLIST", payload: item });
+        // console.log(state.wishlist.length);
         snackBarMessage = 'Se ha agregado el item a la categoría de whishlist';
-        localStorage.setItem('userMovies', JSON.stringify(data));
         handleClick();
     }
 
     const addToAlreadySeen = () => {
-        var d = localStorage.getItem('userMovies');
-        if (d == null) {
-            data.alreadySeen = [item];
-        } else {
-            data = JSON.parse(d);
-            data.alreadySeen.push(item);
-        }
         snackBarMessage = 'Se ha agregado el item a la categoría de vistos';
-        localStorage.setItem('userMovies', JSON.stringify(data));
         handleClick();
     }
     const getButtonActions = () => {

@@ -1,6 +1,6 @@
 import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
-import { useChangeTheme } from '../../provider/Provider';
+import { useChangeTheme } from '../../provider/themeProvider';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import { Link } from 'react-router-dom';
