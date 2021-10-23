@@ -4,10 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createMuiTheme } from '@material-ui/core/styles';
-import ThemeProvider from './theme';
 import { CssBaseline } from '@material-ui/core';
 import blue from '@material-ui/core/colors/blue';
 import { BrowserRouter } from 'react-router-dom';
+import Provider from './provider/Provider';
 
 const theme = createMuiTheme({
   palette: {
@@ -18,12 +18,12 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
+    <Provider theme={theme}>
       <BrowserRouter>
         <CssBaseline />
         <App />
       </BrowserRouter>
-    </ThemeProvider>
+    </Provider>
   </React.StrictMode>,
 
   document.getElementById('root')

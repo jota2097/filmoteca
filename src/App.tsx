@@ -18,7 +18,7 @@ function App() {
         <Grid
           style={{ minHeight: "100vh", margin: 'auto', height: "100%" }}
           container
-          alignItems="center"
+          alignItems="flex-start"
           direction="row"
           justify="center">
           <Grid item style={{ marginTop: "5%" }}>

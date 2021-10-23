@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_URL, API_KEY, LANG, SESSION_ID } from '../config';
-import { ITimelineMovies, IMovies } from '../interfaces/IUpconmigModel';
+import { ITimelineMovies, IMovies } from '../interfaces/IMoviesModel';
 import { ITimelineTvShows } from '../interfaces/ITopTvShowsModel';
 
 export const getUpcomingMovies = async () => {

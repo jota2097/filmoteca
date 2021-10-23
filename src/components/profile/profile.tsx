@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -9,25 +8,16 @@ import { CircularProgress } from '@material-ui/core';
 
 import { useEffect, useState } from 'react';
 import { getUpcomingMovies } from '../../services/axios';
-import { IMovies } from '../../interfaces/IUpconmigModel';
+import { IMovies } from '../../interfaces/IMoviesModel';
 import CardItem from '../card/card';
 import { ICardModel } from '../../interfaces/ICardModel';
 import GenericList from '../genericList/genericList';
 import CustomGrid from '../grid/grid';
-const useStyles = makeStyles(() =>
-    createStyles({
-        root: {
-            flexGrow: 1,
-        },
-    }),
-);
-export default function Profile() {
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+import Box from '@mui/material/Box';
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
+
+export default function Profile() {
+    const [value, setValue] = React.useState(0);
 
     const [data, setData] = useState<IMovies[]>([]);
 
@@ -38,15 +28,13 @@ export default function Profile() {
         fetchData();
     }, []);
 
+    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+        setValue(newValue);
+    };
 
     return (
-        <>
-            <Tabs
-                className={classes.root}
-                value={value}
-                onChange={handleChange}
-            // className={classes.root}>
-            >
+        <Box sx={{ width: '100%' }}>
+            <Tabs value={value} onChange={handleChange} centered>
                 <Tab icon={<VisibilityIcon />} label="Vistos" />
                 <Tab icon={<Favorite />} label="Wishlist" />
             </Tabs>
@@ -69,6 +57,6 @@ export default function Profile() {
                                 voteAverage: item.vote_average
                             } as ICardModel} />}
                 />} /> : <p>adios</p>}
-        </>
+        </Box>
     );
 }

@@ -2,7 +2,7 @@ import { CircularProgress } from '@material-ui/core';
 
 import { useEffect, useState } from 'react';
 import { getUpcomingMovies } from '../../services/axios';
-import { IMovies } from '../../interfaces/IUpconmigModel';
+import { IMovies } from '../../interfaces/IMoviesModel';
 import CardItem from '../card/card';
 import { ICardModel } from '../../interfaces/ICardModel';
 import GenericList from '../genericList/genericList';

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { makeStyles, Container, CircularProgress, createStyles } from '@material-ui/core';
 import { getMovieByID } from '../../services/axios';
-import { IMovies } from '../../interfaces/IUpconmigModel';
+import { IMovies } from '../../interfaces/IMoviesModel';
 import CardItem from '../card/card';
 import { ICardModel } from '../../interfaces/ICardModel';
 

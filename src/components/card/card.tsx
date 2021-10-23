@@ -5,10 +5,13 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import { ICardModel } from '../../interfaces/ICardModel';
 import Rating from '@mui/material/Rating';
 import { Favorite } from '@material-ui/icons';
-import { useState } from 'react';
 import { URL_IMAGES } from '../../config';
 import { ratingMovie } from '../../services/axios';
 import { Alert, Snackbar, SnackbarOrigin } from '@mui/material';
+import { IUserMovies } from '../../interfaces/IUserMoviesModel';
+import { AppContext } from '../../provider/Provider';
+import { useState } from 'react';
+import {useContext} from 'react';
 
 export interface State extends SnackbarOrigin {
     open: boolean;
@@ -33,10 +36,15 @@ export default function CardItem({ item, allowViewMore, isCallFromDetail = false
     const [snackBar, setSnackbar] = useState<State>({
         open: false,
         vertical: 'top',
-        horizontal: 'right',
+        horizontal: 'right'
 
     });
     const { vertical, horizontal, open } = snackBar;
+ //   const [foo, setState] = useContext(AppContext);
+
+  
+    let snackBarMessage = 'Se ha enviado tu rating satisfactoriamente';
+    let data: IUserMovies = { wishlist: [], alreadySeen: [] };
 
     const getRating = () => {
         return !isCallFromDetail ?
@@ -51,6 +59,7 @@ export default function CardItem({ item, allowViewMore, isCallFromDetail = false
         if (value == null) return;
         await ratingMovie(item.id, value);
         setRating(value);
+        snackBarMessage = 'Se ha enviado tu rating satisfactoriamente';
         handleClick();
     }
     const handleClick = () => {
@@ -61,16 +70,42 @@ export default function CardItem({ item, allowViewMore, isCallFromDetail = false
         setSnackbar({ ...snackBar, open: false });
     };
 
+    const addToWishList = () => {
+
+        var d = localStorage.getItem('userMovies');
+        if (d == null) {
+            data.wishlist = [item];
+        } else {
+            data = JSON.parse(d);
+            data.wishlist.push(item);
+        }
+        snackBarMessage = 'Se ha agregado el item a la categoría de whishlist';
+        localStorage.setItem('userMovies', JSON.stringify(data));
+        handleClick();
+    }
+
+    const addToAlreadySeen = () => {
+        var d = localStorage.getItem('userMovies');
+        if (d == null) {
+            data.alreadySeen = [item];
+        } else {
+            data = JSON.parse(d);
+            data.alreadySeen.push(item);
+        }
+        snackBarMessage = 'Se ha agregado el item a la categoría de vistos';
+        localStorage.setItem('userMovies', JSON.stringify(data));
+        handleClick();
+    }
     const getButtonActions = () => {
         return !isCallFromDetail &&
             <>
                 <Tooltip title="Agregar a wishlist">
-                    <IconButton>
+                    <IconButton onClick={() => addToWishList()}>
                         <Favorite />
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="Marcar como visto">
-                    <IconButton>
+                    <IconButton onClick={() => addToAlreadySeen()}>
                         <VisibilityIcon />
                     </IconButton>
                 </Tooltip>
@@ -83,7 +118,7 @@ export default function CardItem({ item, allowViewMore, isCallFromDetail = false
             autoHideDuration={3000}
             onClose={handleClose}>
             <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                Se ha enviado tu rating satisfactoriamente
+                {snackBarMessage}
             </Alert>
         </Snackbar>;
     }

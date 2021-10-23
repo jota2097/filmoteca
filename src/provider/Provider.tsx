@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import {
     createMuiTheme,
     ThemeProvider as MuiThemeProvider,
@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core/styles';
 
 import { useTheme } from '@material-ui/core/styles';
+import { IUserMovies } from '../interfaces/IUserMoviesModel';
 
 interface ThemeProviderProps {
     children: React.ReactNode
@@ -13,9 +14,10 @@ interface ThemeProviderProps {
 }
 
 const ThemeDispatchContext = React.createContext<any>(null);
+const defaultValueAppContext: IUserMovies = { wishlist: [], alreadySeen: [] };
 
-const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
-
+const Provider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
+    const [state, setState] = useState(defaultValueAppContext);
     const themeInitialOptions = {
         paletteType: 'light'
     }
@@ -41,16 +43,26 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
         })
     }, [theme, themeOptions.paletteType]);
 
+    const [themeOptions2, dispatch2] = React.useReducer((state: any, action: any) => {
+
+        return {
+            ...state
+        }
+
+    }, defaultValueAppContext);
     return (
         <MuiThemeProvider theme={memoizedTheme}>
             <ThemeDispatchContext.Provider value={dispatch}>
-                {children}
+                <AppContext.Provider value={{ state, setState }}>
+                    {children}
+                </AppContext.Provider>
             </ThemeDispatchContext.Provider>
         </MuiThemeProvider>
     )
 }
 
-export default ThemeProvider
+export default Provider
+export const AppContext = createContext(defaultValueAppContext);
 
 export const useChangeTheme = () => {
     const dispatch = React.useContext(ThemeDispatchContext);
