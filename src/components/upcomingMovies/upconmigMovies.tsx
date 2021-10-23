@@ -33,26 +33,24 @@ export default function UpcomingMovies() {
     }
 
     return (
-        <>
-            <CustomGrid
-                title={title}
-                sortByName={sortByName}
-                sortByVotes={sortByVotes}
-                child={<GenericList
-                    keyExtractor={({ id }) => id.toString()}
-                    data={data}
-                    renderItem={(item) =>
-                        <CardItem
-                            isCallFromDetail={false}
-                            allowViewMore={true}
-                            item={{
-                                id: item.id,
-                                title: item.title,
-                                imageUrl: item.poster_path,
-                                year: item.release_date,
-                                voteAverage: item.vote_average
-                            } as ICardModel} />}
-                />} />
-        </>
+        <CustomGrid
+            title={title}
+            sortByName={sortByName}
+            sortByVotes={sortByVotes}
+            child={<GenericList
+                keyExtractor={({ id }) => id.toString()}
+                data={data}
+                renderItem={(item) =>
+                    <CardItem
+                        isCallFromDetail={false}
+                        allowViewMore={true}
+                        item={{
+                            id: item.id,
+                            title: item.title,
+                            imageUrl: item.poster_path,
+                            year: item.release_date,
+                            voteAverage: item.vote_average
+                        } as ICardModel} />}
+            />} />
     );
 }

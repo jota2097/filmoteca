@@ -110,7 +110,7 @@ export default function CardItem({ item, allowViewMore, isCallFromDetail = false
                 <CardActions disableSpacing>
                     {getButtonActions()}
                     {allowViewMore &&
-                        <Link to={`/detail?id=${item.id}`} className={classes.button}>
+                        <Link to={`/movie?id=${item.id}`} className={classes.button}>
                             <Button size="small">Ver más</Button>
                         </Link>
                     }

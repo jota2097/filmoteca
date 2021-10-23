@@ -2,10 +2,11 @@ import { Route, Switch } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
 import './App.css';
 import UpcomingMovies from './components/upcomingMovies/upconmigMovies';
-import Detail from './components/detail';
+import Detail from './components/detail/detail';
 import Toolbar from './components/toolbar/toolbar';
 import PopularMovies from './components/popularMovies/popularMovies';
 import TvShows from './components/tvShows/tvShows';
+import Profile from './components/profile/profile';
 
 
 function App() {
@@ -25,7 +26,8 @@ function App() {
               <Route exact path="/" component={PopularMovies} />
               <Route path="/upcoming" component={UpcomingMovies} />
               <Route path="/tvShow" component={TvShows} />
-              <Route path="/detail" component={Detail} />
+              <Route path="/movie" component={Detail} />
+              <Route path="/profile" component={Profile} />
             </Switch>
           </Grid>
         </Grid>

@@ -4,6 +4,7 @@ import { useChangeTheme } from '../../theme';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import { Link } from 'react-router-dom';
+import { AccountCircle } from '@material-ui/icons';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -29,6 +30,9 @@ const useStyles = makeStyles(() =>
         textLink: {
             color: "white",
             textDecorationLine: "inherit"
+        },
+        icon: {
+            color: "#FFFFFF"
         }
     }),
 );
@@ -66,6 +70,16 @@ export default function ToolBar() {
                         >
                             {theme.palette.type === 'light' ? <Brightness4Icon /> : <Brightness7Icon />}
                         </IconButton>
+
+                        <Link to="/profile">
+                            <IconButton
+                                title="Profile"
+                                color="inherit"
+                            >
+                                <AccountCircle className={classes.icon} />
+                            </IconButton>
+                        </Link>
+
                     </div>
                 </Toolbar>
 

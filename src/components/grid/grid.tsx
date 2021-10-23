@@ -37,23 +37,6 @@ export default function CustomGrid({ title, child, sortByName, sortByVotes }: { 
                     {child}
                 </Grid>
             </Grid>
-            {/* <Grid container
-                spacing={3}
-                direction="column"
-                alignItems="center"
-            >
-                <Grid item>
-                    <Typography variant="h3" color="inherit">Peliculas populares</Typography>
-                </Grid>
-                <Grid item>
-                    <List results={pagination.results} />
-                </Grid>
-
-                {/* <ButtonGroup color="primary" aria-label="outlined primary button group">
-                    <Button disabled={pagination.previous === null} onClick={() => previous()}>Back</Button>
-                    <Button disabled={pagination.next === null} onClick={() => next()}>Next</Button>
-                </ButtonGroup> 
-            </Grid> */}
         </>
     );
 }
